@@ -35,9 +35,9 @@
 - Part 8
   GraphQL
 
--Part 9
-TypeScript
-React Native
+- Part 9
+  TypeScript
+  React Native
 
 - Part 10
   React Native
