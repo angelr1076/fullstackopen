@@ -6,7 +6,7 @@
       Fundamentals of Web apps
       Introduction to React
 
-- [ ] Part 1
+- [x] Part 1
       Introduction to React
       Communicating with server
 
