@@ -48,7 +48,9 @@ const Statistics = ({ surveyData }) => {
     const { good, neutral, bad } = surveyData
     const total = good + neutral + bad
     const average = (good + neutral + bad) / 3 || 0
+    const fixedAverage = average.toFixed(1)
     const percentPositive = (good / total) * 100 || 0
+    const fixedPercent = percentPositive.toFixed(1)
 
     return (
         <table>
@@ -56,8 +58,8 @@ const Statistics = ({ surveyData }) => {
             <Statistic text="neutral" value={neutral}/>
             <Statistic text="bad" value={bad}/>
             <Statistic text="total" value={total}/>
-            <Statistic text="average" value={average}/>
-            <Statistic text="positive" value={percentPositive}/>
+            <Statistic text="average" value={fixedAverage}/>
+            <Statistic text="positive" value={fixedPercent}/>
         </table>
     )
 }
