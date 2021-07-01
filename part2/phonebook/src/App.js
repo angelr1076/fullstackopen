@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-      { name: 'Arto Hellas' }
+      { name: 'Arto Hellas', id: 0 }
   ]) 
   const [ newName, setNewName ] = useState('')
 
@@ -11,11 +11,20 @@ const App = () => {
 
       const personObject = {
           name: newName,
-          id: newName
+          id: persons.length + 1
       }
 
-      setPersons(persons.concat(personObject))
-      setNewName('')
+      // Deconstruct and get name from the person object
+      const { name } = personObject
+      const personExists = persons.filter(person => person.name.toLowerCase() === name.toLowerCase())
+      
+      if (personExists.length < 1) {
+        setPersons(persons.concat(personObject))
+        setNewName('')
+      } else {
+        alert(`${name} already exists`)
+        setNewName('')
+      }
   }
 
   const handlePersonChange = event => {
@@ -39,7 +48,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul style={{ listStyleType: 'none' }}>
-        {persons.map(person => <li key={person.name}>{person.name}</li>)}
+        {persons.map(person => <li key={person.id}>{person.name}</li>)}
       </ul>
         
     </div>
