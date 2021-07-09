@@ -1,5 +1,16 @@
 import React, { useState } from 'react'
 import Note from './components/Note'
+import axios from 'axios'
+
+axios
+  .get('http://localhost:3001/notes')
+  .then(response => {
+    const notes = response.data
+    console.log(notes)
+  })
+
+const promise2 = axios.get('http://localhost:3001/foobar')
+console.log(promise2)
 
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
