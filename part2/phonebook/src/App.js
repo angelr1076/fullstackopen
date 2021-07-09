@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import Filter from './components/Filter'
+import Persons from './components/Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -9,7 +11,7 @@ const App = () => {
   ])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
-  const [ search, setSearch ] = useState('')
+  const [ newSearch, setNewSearch ] = useState('')
 
   const addPerson = event => {
       event.preventDefault()
@@ -36,24 +38,28 @@ const App = () => {
   }
 
   const handlePersonChange = event => {
-      setNewName(event.target.value)
+      const name = event.target.value
+      setNewName(name)
   }
 
   const handleNumberChange = event => {
-      setNewNumber(event.target.value)
+      const phone = event.target.value
+      setNewNumber(phone)
   }
 
   const handleSearchPersons = event => {
-      console.log(event.target.value)
-      setSearch(event.target.value)
+      const search = event.target.value
+      setNewSearch(search)
   }
+
+  const showSearchResults = newSearch
+      ? persons.filter(person => person.name.toLowerCase().includes(newSearch.toLowerCase()))
+      : persons
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        <p>filter shown with <input onChange={handleSearchPersons}/></p>
-      </div>
+        <Filter newSearch={newSearch} handleSearch={handleSearchPersons}/>
       <form onSubmit={addPerson}>
         <div>
           name: 
@@ -74,10 +80,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <ul style={{ listStyleType: 'none' }}>
-        {persons.map(person => <li key={person.id}>{person.name} {person.number}</li>)}
-      </ul>
-        
+      <Persons results={showSearchResults} />
     </div>
   )
 }
