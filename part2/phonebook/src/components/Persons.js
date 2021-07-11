@@ -5,7 +5,7 @@ const Persons = ({ results, handleDelete }) => {
     return (
         <ul>
             {results.map((person, i) => 
-                <Person key={i} person={person} number={person.number}/> 
+                <Person key={i} id={i} person={person} number={person.number} handleDeletePerson={() => handleDelete(person.id)}/> 
             )}
         </ul>
     )
