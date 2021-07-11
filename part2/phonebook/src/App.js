@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import './App.css'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import personServices from './services/persons'
-// import axios from 'axios'
-
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -47,8 +46,8 @@ useEffect(hook, [])
                 if (window.confirm(`${updatedPerson.name} is already added to phonebook, replace the old number with a new`)) {
                     personServices
                         .update(findPerson.id, updatedPerson)
-                        .then(serverResponse => {
-                            setPersons(persons.map(person => person.id !== findPerson.id ? person : serverResponse))
+                        .then(updatedResponse => {
+                            setPersons(persons.map(person => person.id !== findPerson.id ? person : updatedResponse))
                             setNewName('')
                             setNewNumber('')
                         })
@@ -96,7 +95,7 @@ useEffect(hook, [])
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
         <Filter newSearch={newSearch} handleSearch={handleSearchPersons}/>
         <PersonForm addPerson={addPerson} newName={newName} handleAddName={handleAddName} newNumber={newNumber} handleAddPhone={handleAddPhone}/>
       <h2>Numbers</h2>
