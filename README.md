@@ -10,7 +10,7 @@
       Introduction to React
       Communicating with server
 
-- [ ] Part 2
+- [x] Part 2
       Communicating with server
 
 - [ ] Part 3
