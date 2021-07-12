@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import './App.css'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import PersonForm from './components/PersonForm'
 import personServices from './services/persons'
 
@@ -10,6 +10,9 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ newSearch, setNewSearch ] = useState('')
+  const [ successMessage, setSuccessMessage ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState('');
+  const [ dynamicClass, setDynamicClass ] = useState('');
 
   const hook = () => {
   personServices
@@ -34,8 +37,15 @@ useEffect(hook, [])
       if (!personExists) {
         personServices
             .create(personObject)
-            .then(returnedList => {
-                setPersons(persons.concat(returnedList))
+            .then(phoneList => {
+                setPersons(persons.concat(phoneList))
+                setDynamicClass('success')
+                setSuccessMessage(
+                  `${personObject.name} has been added to the phonebook`
+                )
+                setTimeout(() => {
+                  setSuccessMessage(null)
+                }, 5000)
                 setNewName('')
                 setNewNumber('')
             })
@@ -48,6 +58,13 @@ useEffect(hook, [])
                         .update(findPerson.id, updatedPerson)
                         .then(updatedResponse => {
                             setPersons(persons.map(person => person.id !== findPerson.id ? person : updatedResponse))
+                            setDynamicClass('success')
+                            setSuccessMessage(
+                              `${personObject.name}'s phone number has been updated`
+                            )
+                            setTimeout(() => {
+                              setSuccessMessage(null)
+                            }, 5000)
                             setNewName('')
                             setNewNumber('')
                         })
@@ -82,9 +99,22 @@ useEffect(hook, [])
             .remove(id)
             .then(deletedPerson => {
               setPersons(persons.filter(person => person.id !== filteredPerson.id))
+              setDynamicClass('success')
+              setSuccessMessage(
+                `${filteredPerson.name} has been deleted from the phonebook`
+              )
+              setTimeout(() => {
+                setSuccessMessage(null)
+              }, 5000)
             })
             .catch(error => {
-              console.log('Error: ', error)
+              setDynamicClass('error')
+              setErrorMessage(
+                `Information of ${filteredPerson.name} has already been removed from the server`
+              )
+              setTimeout(() => {
+                setSuccessMessage(null)
+              }, 5000)
             })
       }
   }
@@ -95,7 +125,8 @@ useEffect(hook, [])
 
   return (
     <div>
-      <h1>Phonebook</h1>
+      <h2>Phonebook</h2>
+        <Notification successMessage={successMessage} errorMessage={errorMessage} dynamicClass={dynamicClass}/>
         <Filter newSearch={newSearch} handleSearch={handleSearchPersons}/>
         <PersonForm addPerson={addPerson} newName={newName} handleAddName={handleAddName} newNumber={newNumber} handleAddPhone={handleAddPhone}/>
       <h2>Numbers</h2>
