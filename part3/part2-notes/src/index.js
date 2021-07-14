@@ -1,7 +1,5 @@
 import ReactDOM from 'react-dom'
 import App from './App.js'
-import './index.css'
-
 
 const notes = [
   {
@@ -23,9 +21,6 @@ const notes = [
     important: true
   }
 ]
-
-const result = notes.map(note => note.id)
-console.log(result)
 
 ReactDOM.render(
   <App notes={notes} />,
