@@ -35,8 +35,8 @@ const App = () => {
     );
 
     if (!personExists) {
-      personServices.create(personObject).then((phoneList) => {
-        setPersons(persons.concat(phoneList));
+      personServices.create(personObject).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
         setDynamicClass("success");
         setSuccessMessage(
           `${personObject.name} has been added to the phonebook`,
@@ -47,29 +47,39 @@ const App = () => {
         setNewName("");
         setNewNumber("");
       });
-      // } else {
-      //     const findPerson = persons.find(person => person.id === personExists.id)
-      //     // Create shallow copy of personObject
-      //     const updatedPerson = { ...personObject, id: findPerson.id}
-      //     if (window.confirm(`${updatedPerson.name} is already added to phonebook, replace the old number with a new`)) {
-      //         personServices
-      //             .update(findPerson.id, updatedPerson)
-      //             .then(updatedResponse => {
-      //                 setPersons(persons.map(person => person.id !== findPerson.id ? person : updatedResponse))
-      //                 setDynamicClass('success')
-      //                 setSuccessMessage(
-      //                   `${personObject.name}'s phone number has been updated`
-      //                 )
-      //                 setTimeout(() => {
-      //                   setSuccessMessage(null)
-      //                 }, 5000)
-      //                 setNewName('')
-      //                 setNewNumber('')
-      //             })
-      //             .catch(error => {
-      //                 console.log('Error: ', error)
-      //             })
-      //     }
+    } else {
+      const findPerson = persons.find(
+        (person) => person.id === personExists.id,
+      );
+      // Create shallow copy of personObject
+      const updatedPerson = { ...personObject, id: findPerson.id };
+      if (
+        window.confirm(
+          `${updatedPerson.name} is already added to phonebook, replace the old number with a new`,
+        )
+      ) {
+        personServices
+          .update(findPerson.id, updatedPerson)
+          .then((updatedResponse) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== findPerson.id ? person : updatedResponse,
+              ),
+            );
+            setDynamicClass("success");
+            setSuccessMessage(
+              `${personObject.name}'s phone number has been updated`,
+            );
+            setTimeout(() => {
+              setSuccessMessage(null);
+            }, 5000);
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((error) => {
+            console.log("Error: ", error);
+          });
+      }
     }
   };
 
