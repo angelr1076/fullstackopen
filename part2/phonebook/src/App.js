@@ -35,19 +35,29 @@ const App = () => {
     );
 
     if (!personExists) {
-      personServices.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setDynamicClass("success");
-        setSuccessMessage(
-          `${personObject.name} has been added to the phonebook`,
-        );
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 5000);
-        setNewName("");
-        setNewNumber("");
-      });
-    } else {
+      personServices
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setDynamicClass("success");
+          setSuccessMessage(
+            `${personObject.name} has been added to the phonebook`,
+          );
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          console.log("Error: ", error.response.data);
+          setDynamicClass("error");
+          setErrorMessage(`${error.response.data.error}`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+        });
+    } else if (personExists) {
       const findPerson = persons.find(
         (person) => person.id === personExists.id,
       );
@@ -77,7 +87,7 @@ const App = () => {
             setNewNumber("");
           })
           .catch((error) => {
-            console.log("Error: ", error);
+            console.log("Error: ", error.response.data);
           });
       }
     }
