@@ -13,7 +13,7 @@
 - [x] Part 2
       Communicating with server
 
-- [ ] Part 3
+- [x] Part 3
       Programming a server with NodeJS and Express
       Testing Express servers, user administration
 
