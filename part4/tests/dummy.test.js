@@ -7,20 +7,6 @@ test('dummy returns one', () => {
   expect(result).toBe(1);
 });
 
-describe('total likes', () => {
-  const isEmpty = [];
-
-  const listWithOneBlog = [
-    {
-      _id: '5a422aa71b54a676234d17f8',
-      title: 'Go To Statement Considered Harmful',
-      author: 'Edsger W. Dijkstra',
-      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-      likes: 5,
-      __v: 0,
-    },
-  ];
-
   const blogs = [
     {
       _id: '5a422a851b54a676234d17f7',
@@ -72,6 +58,22 @@ describe('total likes', () => {
     },
   ];
 
+describe('total likes', () => {
+  const isEmpty = [];
+
+  const listWithOneBlog = [
+    {
+      _id: '5a422aa71b54a676234d17f8',
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      likes: 5,
+      __v: 0,
+    },
+  ];
+
+
+
   test('of empty list is zero', () => {
     const result = listHelper.totalLikes(isEmpty);
     expect(result).toBe(0);
@@ -87,6 +89,14 @@ describe('total likes', () => {
     expect(result).toBe(36);
   });
 });
+
+describe('most likes', () => {
+  test('has the most likes', () => {
+    const result = listHelper.favoriteBlog(blogs);
+    const result2 = result2 > result;
+    expect(result).toEqual(result2);
+  });
+});  
 
 // Terminal example to run a single test
 // npm test -- -t 'when list has only one blog, equals the likes of that'
