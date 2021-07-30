@@ -8,12 +8,17 @@ const totalLikes = blogs => {
 };
 
 const favoriteBlog = blogs => {
-    return blogs.length === 0 ?
-        {} :
-        blogs.reduce(
-            (previous, next) => (next.likes > previous ? next.likes : previous),
-            blogs[0].likes,
-        );
+    const initialValue = [];
+    if (blogs.length === 0) {
+        return {};
+    } else {
+        const maxLikes = blogs.reduce((total, current) => {
+            return total.concat(
+                Array.isArray(current) ? favoriteBlog(current.likes) : current.likes
+            );
+        }, initialValue);
+        return Math.max(...maxLikes);
+    }
 };
 
 module.exports = {
