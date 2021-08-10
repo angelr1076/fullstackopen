@@ -27,9 +27,34 @@ test('there are two blogs', async() => {
     expect(response.body).toHaveLength(2);
 });
 
+test('the first note is about my first blog', async() => {
+    const blogs = await Blog.find({});
+    expect(blogs[0].title).toBe('My first blog');
+});
+
 test('unique identifier is id', async() => {
     const blogs = await Blog.find({});
     expect(blogs[0]._id).toBeDefined();
+});
+
+test('a blog post can be created', async() => {
+    const newBlog = {
+        title: 'This is not Python',
+        author: 'Anonymous',
+        url: 'https://www.firebase.com/sample',
+        likes: 6,
+    };
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
+
+    const blogsAtEnd = await helper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1);
+    const titles = blogsAtEnd.map(blog => blog.title);
+    expect(titles).toContain('This is not Python');
 });
 
 afterAll(() => {
