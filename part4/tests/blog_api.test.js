@@ -57,8 +57,25 @@ test('a blog post can be created', async() => {
 });
 
 test('default likes to 0 if empty', async() => {
-    const emptyLikes = helper.initialBlogs.find(blog => blog.likes === 0);
-    expect(emptyLikes).toBe(0);
+    const newBlog = {
+        title: 'This is an object',
+        author: 'Tazer',
+        url: 'https://www.netlify.com/sample',
+    };
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
+
+    const blogPost = await helper.blogsInDb();
+    const findBlogPost = await helper.blogsInDb.find(
+        blog => blog.author === 'Tazer'
+    );
+    console.log('blog posted: ', findBlogPost);
+
+    expect(findBlogPost.likes).toBe(0);
 });
 
 afterAll(() => {
