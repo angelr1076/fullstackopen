@@ -12,7 +12,7 @@ const initialBlogs = [{
         author: 'Edsger W. Dijkstra',
         url: 'https://www.cs.utexas.edu/users/EWD/indexBibTeX.html',
         likes: 12,
-        id: '60ff5d5baf4d677086ba444a',`
+        id: '60ff5d5baf4d677086ba444a',
     },
 ];
 
