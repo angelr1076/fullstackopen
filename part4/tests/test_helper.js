@@ -21,7 +21,13 @@ const blogsInDb = async() => {
     return blogs.map(blog => blog.toJSON());
 };
 
+const likesEmpty = async() => {
+    const blogs = await Blog.find({});
+    return blogs.filter(blog => console.log(blog.likes === 0));
+};
+
 module.exports = {
     initialBlogs,
     blogsInDb,
+    likesEmpty,
 };

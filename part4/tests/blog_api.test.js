@@ -56,6 +56,11 @@ test('a blog post can be created', async() => {
     expect(titles).toContain('This is not Python');
 });
 
+test('default likes to 0 if empty', async() => {
+    const emptyLikes = helper.initialBlogs.find(blog => blog.likes === 0);
+    expect(emptyLikes).toBe(0);
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
