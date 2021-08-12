@@ -55,6 +55,15 @@ test('a blog post can be created', async() => {
     expect(titles).toContainEqual('hegemony is the key to leadership');
 });
 
+test('if the title and url properties are missing respond with the status code 400 Bad Request', async() => {
+    const newBlog = {
+        author: 'Not Me',
+        likes: 5,
+    };
+
+    await api.post('/api/blogs').send(newBlog).expect(400);
+});
+
 test('default likes to 0 if likes property is empty', async() => {
     const newBlog = {
         title: 'This is an object',
