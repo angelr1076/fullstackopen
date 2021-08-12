@@ -8,12 +8,6 @@ const initialBlogs = [{
         id: '60fb343d2eee5352db9429c6',
     },
     {
-        title: 'My new blog',
-        author: 'Elorah Rodriguez',
-        url: 'http://localhost3003/api/blogs',
-        id: '60fb343d2eee5352db947890',
-    },
-    {
         title: 'Canonical string reduction',
         author: 'Edsger W. Dijkstra',
         url: 'https://www.cs.utexas.edu/users/EWD/indexBibTeX.html',
