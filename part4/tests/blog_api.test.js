@@ -4,7 +4,6 @@ const app = require('../app');
 const api = supertest(app);
 const Blog = require('../models/blog');
 const helper = require('./test_helper');
-// jest.useFakeTimers();
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -12,7 +11,7 @@ beforeEach(async () => {
   const blogObjects = helper.initialBlogs.map(blog => new Blog(blog));
   const promiseArray = blogObjects.map(blog => blog.save());
   await Promise.all(promiseArray);
-});
+}, 20000);
 
 describe('return blog entries attributes', () => {
   test('blogs are returned as json', async () => {
@@ -90,6 +89,21 @@ describe('when a blog entry is created', () => {
     await api.post('/api/blogs').send(newBlog).expect(400);
     const allBlogs = await helper.blogsInDb();
     expect(allBlogs).toHaveLength(helper.initialBlogs.length);
+  });
+});
+
+describe('modifying a blog post', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogsAtStart = await helper.blogsInDb();
+    const blogToDelete = blogsAtStart[0];
+
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+
+    const blogsAtEnd = await helper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1);
+
+    const title = blogsAtEnd.map(b => b.title);
+    expect(title).not.toContain(blogToDelete.title);
   });
 });
 
