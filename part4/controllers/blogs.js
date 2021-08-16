@@ -33,6 +33,7 @@ blogsRouter.put('/:id', (request, response, next) => {
     likes: body.likes,
   };
 
+  // Update command
   Blog.findByIdAndUpdate(request.params.id, blog)
     .then(updatedBlog => {
       response.json(updatedBlog.toJSON());
