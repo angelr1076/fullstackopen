@@ -4,7 +4,10 @@ const app = require('../app');
 const api = supertest(app);
 const Blog = require('../models/blog');
 const helper = require('./test_helper');
-jest.useFakeTimers();
+
+jest.setTimeout(20000);
+
+// Add describe statements
 
 beforeEach(async() => {
     await Blog.deleteMany({});
@@ -21,9 +24,9 @@ test('blogs are returned as json', async() => {
         .expect('Content-Type', /application\/json/);
 });
 
-test('there are two blogs', async() => {
+test('there are five blogs', async() => {
     const response = await api.get('/api/blogs');
-    expect(response.body).toHaveLength(2);
+    expect(response.body).toHaveLength(5);
 });
 
 test('the first note is about my first blog', async() => {
@@ -87,6 +90,10 @@ test('if the title and url are missing respond with status code 400', async() =>
     await api.post('/api/blogs').send(newBlog).expect(400);
     const allBlogs = await helper.blogsInDb();
     expect(allBlogs).toHaveLength(helper.initialBlogs.length);
+});
+
+test('returns the author who has the largest amount of blogs', async() => {
+    console.log(helper.mostBlogs());
 });
 
 afterAll(() => {
