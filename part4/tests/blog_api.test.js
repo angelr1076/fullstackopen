@@ -33,13 +33,24 @@ describe('return blog entries attributes', () => {
   });
 
   test('the first entry is about string reduction', async () => {
-    const blogs = await Blog.find({});
+    const blogs = await helper.blogsInDb();
     expect(blogs[0].title).toBe('Canonical string reduction');
   });
 
   test('unique identifier is id', async () => {
     const blogs = await Blog.find({});
     expect(blogs[0]._id).toBeDefined();
+  });
+
+  test('returns the author who has the largest amount of blogs', async () => {
+    const blogs = await helper.mostBlogs();
+    console.log(blogs);
+    expect(blogs.author).toBe('Angel Rodriguez');
+  });
+
+  test('returns the blog that has the most likes', async () => {
+    const blogs = await helper.mostLikes();
+    expect(blogs.likes).toBe(15);
   });
 });
 
@@ -111,10 +122,6 @@ describe('modifying a blog post', () => {
     const title = blogsAtEnd.map(b => b.title);
     expect(title).not.toContain(blogToDelete.title);
   });
-});
-
-test('returns the author who has the largest amount of blogs', async () => {
-  console.log(helper.mostBlogs());
 });
 
 describe('when there is initially one user in db', () => {

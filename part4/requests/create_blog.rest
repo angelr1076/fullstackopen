@@ -1,7 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZ2VscjEwNzYiLCJpZCI6IjYxMWY4ZjNjM2JjOWE1Mjc0MGNjMWFmOSIsImlhdCI6MTYyOTY1NDIyMCwiZXhwIjoxNjI5NjU3ODIwfQ.OsU7w1zXASZh3_qtfWhnSL6PdFpoFi0ETKbiN01kYDc
 
 {
-    "title": "Single page apps use token authentication",
+    "likes": 2,
+    "title": "Testing the relaunch of middleware",
+    "author": "Angel Rodriguez",
+    "url": "http://www.angelrod.dev"
 }

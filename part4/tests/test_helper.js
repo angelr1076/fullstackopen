@@ -4,18 +4,18 @@ const User = require('../models/user');
 
 const initialBlogs = [
   {
-    title: 'My first blog',
-    author: 'Angel Rodriguez',
-    url: 'https://www.angelrod.dev',
-    likes: 0,
-    id: '60fb343d2eee5352db9429c6',
-  },
-  {
     title: 'Canonical string reduction',
     author: 'Edsger W. Dijkstra',
     url: 'https://www.cs.utexas.edu/users/EWD/indexBibTeX.html',
     likes: 12,
     id: '60ff5d5baf4d677086ba444a',
+  },
+  {
+    title: 'My first blog',
+    author: 'Angel Rodriguez',
+    url: 'https://www.angelrod.dev',
+    likes: 0,
+    id: '60fb343d2eee5352db9429c6',
   },
   {
     title: 'My first years',
@@ -45,8 +45,24 @@ const blogsInDb = async () => {
   return blogs.map(blog => blog.toJSON());
 };
 
+const mostLikes = async () => {
+  const blogs = await Blog.find({});
+  return _.maxBy(blogs, 'likes');
+};
+
 const mostBlogs = async () => {
-  return _.maxBy(blogsInDb(), 'likes');
+  const blogs = await Blog.find({});
+  const allBlogs = blogs.map(blog => blog.toJSON());
+
+  const highestCount = allBlogs.reduce((obj, blog) => {
+    obj[blog.author] = obj[blog.author] ? obj[blog.author] + 1 : 1;
+    return obj;
+  }, {});
+
+  Object.entries(highestCount).forEach(entry => {
+    const [author, count] = entry;
+    console.log(`${author} = ${count}`);
+  });
 };
 
 const usersInDb = async () => {
@@ -57,6 +73,7 @@ const usersInDb = async () => {
 module.exports = {
   initialBlogs,
   blogsInDb,
+  mostLikes,
   mostBlogs,
   usersInDb,
 };
