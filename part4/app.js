@@ -2,11 +2,11 @@ const config = require('./utils/config');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const logger = require('./utils/logger');
 const loginRouter = require('./controllers/login');
 const userRouter = require('./controllers/users');
 const blogRouter = require('./controllers/blogs');
 const middleware = require('./utils/middleware');
-const logger = require('./utils/logger');
 const mongoose = require('mongoose');
 
 logger.info('connecting to', config.MONGODB_URI);
@@ -26,14 +26,16 @@ mongoose
   });
 
 app.use(cors());
+app.use(middleware.tokenExtractor);
 
 app.use(express.static('build'));
 app.use(express.json());
+
 app.use(middleware.requestLogger);
-app.use(middleware.tokenExtractor);
 
 app.use('/api/login', loginRouter);
 app.use('/api/users', userRouter);
+
 app.use('/api/blogs', blogRouter);
 
 app.use(middleware.unknownEndpoint);
