@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZ2VscjEwNzYiLCJpZCI6IjYxMWY4ZjNjM2JjOWE1Mjc0MGNjMWFmOSIsImlhdCI6MTYyOTc5OTY4NiwiZXhwIjoxNjI5ODAzMjg2fQ.pN0BTtfQprhn2SFisF9xJ9y_lLWzMonXTGx-4zqiafA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZ2VscjEwNzYiLCJpZCI6IjYxMWY4ZjNjM2JjOWE1Mjc0MGNjMWFmOSIsImlhdCI6MTYyOTgwNjM2NCwiZXhwIjoxNjI5ODA5OTY0fQ.l8V9hWEtJZYcoZaKk1fPnw16ILQ5r9QgAPTlu56I_-Y
 
 {
     "likes": 4,
-    "title": "JavaScript is an asynchronous programming language",
+    "title": "For exercise 4.22",
     "author": "Angel Rodriguez",
     "url": "http://www.angelrod.dev"
 }

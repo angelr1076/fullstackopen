@@ -15,11 +15,13 @@ blogsRouter.post('/', async(request, response, next) => {
     const user = await User.findById(decodedToken.id);
 
     if (body.title === undefined || body.url === undefined) {
-        return response.status(400).end();
+        return response.status(400).json({ error: 'missing body and/or url' });
     }
 
     if (!token || !decodedToken.id) {
-        return response.status(401).json({ error: 'token missing or invalid' });
+        return response
+            .status(401)
+            .json({ error: 'token is missing or is invalid' });
     }
 
     const blog = new Blog({
