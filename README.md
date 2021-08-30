@@ -17,7 +17,7 @@
       Programming a server with NodeJS and Express
       Testing Express servers, user administration
 
-- [ ] Part 4
+- [x] Part 4
       Testing Express servers, user administration
       Testing React apps
 

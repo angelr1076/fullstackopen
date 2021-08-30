@@ -4,6 +4,7 @@ import blogService from './services/blogs';
 import loginService from './services/login';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container'
 
 const App = () => {
   // All blogs display
@@ -46,12 +47,20 @@ const App = () => {
       url,
     };
 
-    blogService.create(blogObject).then(returnedBlog => {
+    blogService.create(blogObject)
+    .then(returnedBlog => {
       setBlogs(blogs.concat(returnedBlog));
       console.log(returnedBlog);
       setTitle('');
       setAuthor('');
       setURL('');
+      setMessage(`New blog added "${returnedBlog.title}! by ${returnedBlog.author}"`);
+      setMessageClass('success');
+
+      setTimeout(() => {
+        setMessage(null);
+        setMessageClass('none');
+      }, 3000);
     });
   };
 
@@ -96,12 +105,14 @@ const App = () => {
       setMessageClass('success');
       setTimeout(() => {
         setMessage(null);
+        setMessageClass('none');
       }, 3000);
     } catch (exception) {
       setMessage('Error trying to log you out');
       setMessageClass('error');
       setTimeout(() => {
         setMessage(null);
+        setMessageClass('none');
       }, 3000);
     }
   };
@@ -136,43 +147,51 @@ const App = () => {
     </Form>
   );
 
-  const handleTitleChange = event => {
-    setTitle(event.target.value);
-  };
-
-  const handleAuthorChange = event => {
-    setAuthor(event.target.value);
-  };
-
-  const handleUrlChange = event => {
-    setURL(event.target.value);
-  };
-
   const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <input
-        type='text'
-        value={title}
-        name='Title'
-        onChange={handleTitleChange}
-      />
-      <br />
-      <input
-        type='text'
-        value={author}
-        name='Author'
-        onChange={handleAuthorChange}
-      />
-      <br />
-      <input type='text' value={url} name='Url' onChange={handleUrlChange} />
-      <br />
-      <button type='submit'>Create</button>
-    </form>
+     <Form onSubmit={addBlog}>
+      <Form.Group className='mb-3' controlId='formBasicEntry'>
+        <Form.Label>Title</Form.Label>
+        <Form.Control
+          type='text'
+          value={title}
+          name='Title'
+          onChange={({ target }) => setTitle(target.value)}
+          placeholder='Enter Title'
+        />
+        <Form.Text className='text-muted'></Form.Text>
+      </Form.Group>
+
+      <Form.Group className='mb-3' controlId='formBasicEntry'>
+        <Form.Label>Author</Form.Label>
+        <Form.Control
+          type='text'
+          value={author}
+          name='Author'
+          onChange={({ target }) => setAuthor(target.value)}
+          placeholder='Author'
+        />
+      </Form.Group>
+       <Form.Group className='mb-3' controlId='formBasicEntry'>
+        <Form.Label>URL</Form.Label>
+        <Form.Control
+          type='text'
+          value={url}
+          name='URL'
+          onChange={({ target }) => setURL(target.value)}
+          placeholder='URL'
+        />
+      </Form.Group>
+      <Button variant='primary' type='submit'>
+        Submit
+      </Button>
+    </Form>
   );
 
   const logOutForm = () => (
     <form onSubmit={handleLogOut}>
-      <button type='submit'>Logout</button>
+      <Button variant='info' type='submit' style={{ color: 'white' }}>
+        Logout
+      </Button>
     </form>
   );
 
@@ -187,17 +206,22 @@ const App = () => {
   }
 
   return (
-    <div className='container'>
+    <div>
+    <Container>
       <p className={messageClass}>{message}</p>
-
-      <p>{user.name} is logged in</p>
+      
+      <p>{user.name} is logged in </p>
       {logOutForm()}
+      <hr />
+      <br />
       {blogForm()}
+      <hr />
       <ul>
         {blogs.map(blog => (
           <Blog key={blog.id} blog={blog} />
         ))}
       </ul>
+      </Container>
     </div>
   );
 };
