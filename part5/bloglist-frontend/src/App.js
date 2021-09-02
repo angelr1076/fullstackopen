@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Blog from './components/Blog';
 import blogService from './services/blogs';
 import loginService from './services/login';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container'
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// import Container from 'react-bootstrap/Container'
 
 const App = () => {
   // All blogs display
@@ -47,14 +47,15 @@ const App = () => {
       url,
     };
 
-    blogService.create(blogObject)
-    .then(returnedBlog => {
+    blogService.create(blogObject).then(returnedBlog => {
       setBlogs(blogs.concat(returnedBlog));
       console.log(returnedBlog);
       setTitle('');
       setAuthor('');
       setURL('');
-      setMessage(`New blog added "${returnedBlog.title}! by ${returnedBlog.author}"`);
+      setMessage(
+        `New blog added "${returnedBlog.title}! by ${returnedBlog.author}"`
+      );
       setMessageClass('success');
 
       setTimeout(() => {
@@ -148,7 +149,7 @@ const App = () => {
   );
 
   const blogForm = () => (
-     <Form onSubmit={addBlog}>
+    <Form onSubmit={addBlog}>
       <Form.Group className='mb-3' controlId='formBasicEntry'>
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -171,7 +172,7 @@ const App = () => {
           placeholder='Author'
         />
       </Form.Group>
-       <Form.Group className='mb-3' controlId='formBasicEntry'>
+      <Form.Group className='mb-3' controlId='formBasicEntry'>
         <Form.Label>URL</Form.Label>
         <Form.Control
           type='text'
@@ -207,20 +208,20 @@ const App = () => {
 
   return (
     <div>
-    <Container>
-      <p className={messageClass}>{message}</p>
-      
-      <p>{user.name} is logged in </p>
-      {logOutForm()}
-      <hr />
-      <br />
-      {blogForm()}
-      <hr />
-      <ul>
-        {blogs.map(blog => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
-      </ul>
+      <Container>
+        <p className={messageClass}>{message}</p>
+
+        <p>{user.name} is logged in </p>
+        {logOutForm()}
+        <hr />
+        <br />
+        {blogForm()}
+        <hr />
+        <ul>
+          {blogs.map(blog => (
+            <Blog key={blog.id} blog={blog} />
+          ))}
+        </ul>
       </Container>
     </div>
   );
