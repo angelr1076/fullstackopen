@@ -1,0 +1,45 @@
+html {
+    box-sizing: border-box;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    font-family: 'Calibri';
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.blog {
+    color: grey;
+    padding-top: 3px;
+    font-size: 15px;
+}
+
+.none {
+    display: none;
+}
+
+.success {
+    color: white;
+    background: cadetblue;
+    font-size: 20px;
+    border: 2px solid white;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: white;
+    background: salmon;
+    font-size: 20px;
+    border: 2px solid white;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}

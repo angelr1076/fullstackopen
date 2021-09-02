@@ -1,0 +1,4 @@
+MONGODB_URI=mongodb+srv://fullstack:Daisy0794%21@fullstackopen.syzdq.mongodb.net/blog-list?retryWrites=true&w=majority
+TEST_MONGODB_URI=mongodb+srv://fullstack:Daisy0794%21@fullstackopen.syzdq.mongodb.net/blog-test?retryWrites=true&w=majority
+PORT=3003
+SECRET=sssshhhh
