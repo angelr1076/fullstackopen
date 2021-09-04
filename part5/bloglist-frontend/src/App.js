@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Blog from './components/Blog';
+import LoginForm from './components/LoginForm';
+import BlogForm from './components/BlogForm';
+import Togglable from './components/Togglable';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container'
+import Container from 'react-bootstrap/Container';
+// import Form from 'react-bootstrap/Form';
 
 const App = () => {
   // All blogs display
   const [blogs, setBlogs] = useState([]);
+  const [loginVisible, setLoginVisible] = useState(false)
   // Set blog properties
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setURL] = useState('');
+  // const [title, setTitle] = useState('');
+  // const [author, setAuthor] = useState('');
+  // const [url, setURL] = useState('');
 
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
@@ -37,31 +41,22 @@ const App = () => {
     }
   }, []);
 
-  const addBlog = event => {
-    event.preventDefault();
-
-    const blogObject = {
-      user,
-      title,
-      author,
-      url,
-    };
-
-    blogService.create(blogObject)
-    .then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog));
-      console.log(returnedBlog);
-      setTitle('');
-      setAuthor('');
-      setURL('');
-      setMessage(`New blog added "${returnedBlog.title}! by ${returnedBlog.author}"`);
-      setMessageClass('success');
-
-      setTimeout(() => {
-        setMessage(null);
-        setMessageClass('none');
-      }, 3000);
-    });
+  const addBlog = blogObject => {
+  
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog));
+        console.log(returnedBlog);
+        setMessage(
+          `New blog added "${returnedBlog.title}! by ${returnedBlog.author}"`
+        );
+        setMessageClass('success');
+        setTimeout(() => {
+          setMessage(null);
+          setMessageClass('none');
+        }, 3000);
+      });
   };
 
   const handleLogin = async event => {
@@ -86,6 +81,7 @@ const App = () => {
         setMessage(null);
         setMessageClass('none');
       }, 3000);
+      
     } catch (exception) {
       setMessage('Wrong credentials');
       setMessageClass('error');
@@ -96,8 +92,36 @@ const App = () => {
     }
   };
 
+   const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+    const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
+    return (
+      <div>
+        <div style={hideWhenVisible}>
+          <Button variant='secondary' onClick={() => setLoginVisible(true)}>
+            Log In
+          </Button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+          <Button variant='secondary' onClick={() => setLoginVisible(false)}>
+            Cancel
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
   const handleLogOut = async event => {
     event.preventDefault();
+
     try {
       window.localStorage.removeItem('loggedBlogappUser');
       setUser(null);
@@ -107,6 +131,7 @@ const App = () => {
         setMessage(null);
         setMessageClass('none');
       }, 3000);
+
     } catch (exception) {
       setMessage('Error trying to log you out');
       setMessageClass('error');
@@ -117,75 +142,7 @@ const App = () => {
     }
   };
 
-  const loginForm = () => (
-    <Form onSubmit={handleLogin}>
-      <Form.Group className='mb-3' controlId='formBasicUser'>
-        <Form.Label>Username</Form.Label>
-        <Form.Control
-          type='text'
-          value={username}
-          name='Username'
-          onChange={({ target }) => setUsername(target.value)}
-          placeholder='Enter username'
-        />
-        <Form.Text className='text-muted'></Form.Text>
-      </Form.Group>
 
-      <Form.Group className='mb-3' controlId='formBasicPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type='password'
-          value={password}
-          name='Password'
-          onChange={({ target }) => setPassword(target.value)}
-          placeholder='Password'
-        />
-      </Form.Group>
-      <Button variant='primary' type='submit'>
-        Submit
-      </Button>
-    </Form>
-  );
-
-  const blogForm = () => (
-     <Form onSubmit={addBlog}>
-      <Form.Group className='mb-3' controlId='formBasicEntry'>
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          type='text'
-          value={title}
-          name='Title'
-          onChange={({ target }) => setTitle(target.value)}
-          placeholder='Enter Title'
-        />
-        <Form.Text className='text-muted'></Form.Text>
-      </Form.Group>
-
-      <Form.Group className='mb-3' controlId='formBasicEntry'>
-        <Form.Label>Author</Form.Label>
-        <Form.Control
-          type='text'
-          value={author}
-          name='Author'
-          onChange={({ target }) => setAuthor(target.value)}
-          placeholder='Author'
-        />
-      </Form.Group>
-       <Form.Group className='mb-3' controlId='formBasicEntry'>
-        <Form.Label>URL</Form.Label>
-        <Form.Control
-          type='text'
-          value={url}
-          name='URL'
-          onChange={({ target }) => setURL(target.value)}
-          placeholder='URL'
-        />
-      </Form.Group>
-      <Button variant='primary' type='submit'>
-        Submit
-      </Button>
-    </Form>
-  );
 
   const logOutForm = () => (
     <form onSubmit={handleLogOut}>
@@ -194,6 +151,10 @@ const App = () => {
       </Button>
     </form>
   );
+
+  const blogForm = () => {
+      <BlogForm createBlog={addBlog}/>
+  }
 
   if (user === null) {
     return (
@@ -207,20 +168,20 @@ const App = () => {
 
   return (
     <div>
-    <Container>
-      <p className={messageClass}>{message}</p>
-      
-      <p>{user.name} is logged in </p>
-      {logOutForm()}
-      <hr />
-      <br />
-      {blogForm()}
-      <hr />
-      <ul>
-        {blogs.map(blog => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
-      </ul>
+      <Container>
+        <p className={messageClass}>{message}</p>
+
+        <p>{user.name} is logged in </p>
+        {logOutForm()}
+        <hr />
+        <br />
+        {blogForm()}
+        <hr />
+        <ul>
+          {blogs.map(blog => (
+            <Blog key={blog.id} blog={blog} />
+          ))}
+        </ul>
       </Container>
     </div>
   );
