@@ -72,20 +72,25 @@ blogsRouter.delete(
   },
 );
 
-blogsRouter.put('/:id', (request, response, next) => {
+blogsRouter.put('/:id', async (request, response, next) => {
   const body = request.body;
 
   const blog = {
+    author: body.author,
+    title: body.title,
+    url: body.url,
     likes: body.likes,
   };
 
-  // Update command
-  Blog.findByIdAndUpdate(request.params.id, blog)
-    .then(updatedBlog => {
-      response.json(updatedBlog.toJSON());
-      response.status(204).end();
-    })
-    .catch(error => next(error));
+  try {
+    // Update command
+    const editedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
+      new: true,
+    });
+    editedBlog.toJSON();
+  } catch (exception) {
+    next(exception);
+  }
 });
 
 module.exports = blogsRouter;
