@@ -34,6 +34,10 @@ const Blog = ({ blog, updateBlog }) => {
     setBlogObject(editedBlog);
   };
 
+  const removeBlog = () => {
+    
+  };
+
   return (
     <div>
       <ListGroup variant className='m-3'>
@@ -59,6 +63,14 @@ const Blog = ({ blog, updateBlog }) => {
               onClick={likeBlog}
             >
               {blogObject.likes} likes
+            </Button>
+            <Button
+              variant='danger'
+              type='submit'
+              style={{ marginLeft: '10px', color: 'white' }}
+              onClick={removeBlog}
+            >
+              Remove
             </Button>
           </ListGroup.Item>
           <Button

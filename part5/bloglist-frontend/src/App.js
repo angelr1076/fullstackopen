@@ -61,6 +61,10 @@ const App = () => {
     }, 3000);
   };
 
+  const removeBlog = async id => {
+    
+  }
+
   const handleLogin = async event => {
     event.preventDefault();
 
@@ -193,7 +197,9 @@ const App = () => {
         {blogForm()}
         <hr />
         <ul>
-          {blogs.map(blog => (
+          {blogs
+          .sort((a, b) => a.likes > b.likes ? -1 : 1)
+          .map(blog => (
             <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
           ))}
         </ul>
