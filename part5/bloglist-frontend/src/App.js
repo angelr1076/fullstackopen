@@ -61,9 +61,10 @@ const App = () => {
     }, 3000);
   };
 
-  const deleteBlog = async id => {
-    const blogToDelete = await blogService.remove(id);
+  const deleteBlog = async blog => {
+    const blogToDelete = await blogService.remove(blog.id);
     setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id));
+    console.log(blogs)
   };
 
   const handleLogin = async event => {

@@ -70,7 +70,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
               style={{ marginLeft: '10px', color: 'white' }}
               onClick={removeBlog}
             >
-              Remove
+              Delete
             </Button>
           </ListGroup.Item>
           <Button
