@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const buttonStyle = {
     width: '60px',
     marginTop: '5px',
@@ -35,7 +35,7 @@ const Blog = ({ blog, updateBlog }) => {
   };
 
   const removeBlog = () => {
-    
+    deleteBlog(blog)
   };
 
   return (

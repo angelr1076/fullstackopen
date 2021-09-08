@@ -48,12 +48,12 @@ const App = () => {
   };
 
   const updateBlog = async blogObject => {
-    const updatedBlog = await blogService.update(blogObject.id, blogObject);
+    const blogToUpdate = await blogService.update(blogObject.id, blogObject);
     setBlogs(
-      blogs.map(blog => (blog.id !== updatedBlog.id ? blog : updatedBlog)),
+      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate)),
     );
-    console.log(updatedBlog);
-    setMessage(`Liked "${updatedBlog.title}"`);
+    console.log(blogToUpdate);
+    setMessage(`Liked "${blogToUpdate.title}"`);
     setMessageClass('success');
     setTimeout(() => {
       setMessage(null);
@@ -61,9 +61,10 @@ const App = () => {
     }, 3000);
   };
 
-  const removeBlog = async id => {
-    
-  }
+  const deleteBlog = async id => {
+    const blogToDelete = await blogService.remove(id);
+    setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id));
+  };
 
   const handleLogin = async event => {
     event.preventDefault();
@@ -198,10 +199,15 @@ const App = () => {
         <hr />
         <ul>
           {blogs
-          .sort((a, b) => a.likes > b.likes ? -1 : 1)
-          .map(blog => (
-            <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
-          ))}
+            .sort((a, b) => (a.likes > b.likes ? -1 : 1))
+            .map(blog => (
+              <Blog
+                key={blog.id}
+                blog={blog}
+                updateBlog={updateBlog}
+                deleteBlog={deleteBlog}
+              />
+            ))}
         </ul>
       </Container>
     </div>
