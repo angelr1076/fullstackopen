@@ -53,21 +53,21 @@ blogsRouter.delete(
         const token = request.token;
         const decodedToken = jwt.verify(token, process.env.SECRET);
         const blog = await Blog.findById(request.params.id);
+        console.log(token, ' ----- ', decodedToken, ' ---- ', blog);
+        // if (!token || !decodedToken.id || blog) {
+        //     return response.status(401).json({ error: 'token missing or invalid' });
+        // }
 
-        if (!token || !decodedToken.id || blog) {
-            return response.status(401).json({ error: 'token missing or invalid' });
-        }
-
-        if (blog.user.toString() === decodedToken.id.toString()) {
-            try {
-                await Blog.findByIdAndRemove(request.params.id);
-                response.status(204).json(`${request.params.id} deleted from blogs`);
-            } catch (exception) {
-                next(exception);
-            }
-        } else {
-            response.status(401).json({ error: 'unauthorized attempt to delete' });
-        }
+        // if (blog.user.toString() === decodedToken.id.toString()) {
+        //     try {
+        //         await Blog.findByIdAndRemove(request.params.id);
+        //         response.status(204).json(`${request.params.id} deleted from blogs`);
+        //     } catch (exception) {
+        //         next(exception);
+        //     }
+        // } else {
+        //     response.status(401).json({ error: 'unauthorized attempt to delete' });
+        // }
     }
 );
 
