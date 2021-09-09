@@ -4,6 +4,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
 const Blog = ({ blog, updateBlog, deleteBlog }) => {
+  console.log(blog)
   const buttonStyle = {
     width: '60px',
     marginTop: '5px',

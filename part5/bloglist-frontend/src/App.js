@@ -61,10 +61,43 @@ const App = () => {
     }, 3000);
   };
 
+  // const deleteBlog = async blog => {
+  //   const blogId = blog.user.id;
+  //   const userId = user.token;
+  //   console.log('blogId ', blogId, ' --- userId ', userId);
+  //   if (blogId === userId) {
+  //     try {
+  //       const blogToDelete = await blogService.remove(blogId);
+  //       setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id));
+  //       console.log(blogs);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     alert('You are not authorized to delete this blog');
+  //   }
+  // };
+
   const deleteBlog = async blog => {
-    const blogToDelete = await blogService.remove(blog.id);
-    setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id));
-    console.log(blogs)
+    try {
+      if (window.confirm(`Delete ${blog.title} ?`)) {
+        blogService.remove(blog.id);
+        setMessage(`Blog ${blog.title} was successfully deleted`);
+        setBlogs(blogs.filter(b => b.id !== blog.id));
+        setMessageClass('success');
+        setTimeout(() => {
+          setMessage(null);
+          setMessageClass('none');
+        }, 5000);
+      }
+    } catch (exception) {
+      setMessage(`Cannot delete blog ${blog.title}`);
+      setMessageClass('error');
+      setTimeout(() => {
+        setMessage(null);
+        setMessageClass('none');
+      }, 5000);
+    }
   };
 
   const handleLogin = async event => {
