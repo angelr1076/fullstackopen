@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-// import blogService from '../services/blogs';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
-const Blog = ({ blog, updateBlog, deleteBlog }) => {
-  console.log(blog)
+const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
+  console.log(blog);
   const buttonStyle = {
     width: '60px',
     marginTop: '5px',
@@ -36,14 +35,14 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   };
 
   const removeBlog = () => {
-    deleteBlog(blog)
+    deleteBlog(blog);
   };
 
   return (
     <div>
       <ListGroup variant className='m-3'>
         <div style={hideWhenVisible}>
-          <ListGroup.Item>{blog.title} </ListGroup.Item>
+          <ListGroup.Item>Title: <i>{blog.title}</i> </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
@@ -53,9 +52,11 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
           </Button>
         </div>
         <div style={showWhenVisible}>
-          <ListGroup.Item>{blog.title} </ListGroup.Item>
-          <ListGroup.Item>{blog.url}</ListGroup.Item>
-          <ListGroup.Item>{blog.author}</ListGroup.Item>
+          <ListGroup.Item>Title: <i>{blog.title}</i> </ListGroup.Item>
+          <ListGroup.Item>Url: <i>{blog.url}</i></ListGroup.Item>
+          <ListGroup.Item>Author: <i>{blog.author}</i></ListGroup.Item>
+          <ListGroup.Item>Posted by: <i>{blog.user.name}</i></ListGroup.Item>
+          <ListGroup.Item hidden>{user.name}</ListGroup.Item>
           <ListGroup.Item>
             <Button
               variant='success'
@@ -65,6 +66,8 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
             >
               {blogObject.likes} likes
             </Button>
+            {/* If user created blog, show delete button */}
+            {blog.user.name === user.name ? 
             <Button
               variant='danger'
               type='submit'
@@ -73,6 +76,9 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
             >
               Delete
             </Button>
+            : ''
+            }
+            
           </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
