@@ -3,7 +3,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
 const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
-  console.log(blog);
   const buttonStyle = {
     width: '60px',
     marginTop: '5px',
@@ -40,13 +39,13 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   return (
     <div>
-      <ListGroup variant className='m-3'>
+      <ListGroup style={{ marginTop: '10px', border: '1px solid lightgrey', padding: '10px'}}>
         <div style={hideWhenVisible}>
           <ListGroup.Item>Title: <i>{blog.title}</i> </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
-            variant='primary'
+            variant='primary mt-3'
           >
             View
           </Button>
@@ -59,9 +58,9 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
           <ListGroup.Item hidden>{user.name}</ListGroup.Item>
           <ListGroup.Item>
             <Button
-              variant='success'
+              variant='info'
               type='submit'
-              style={{ marginLeft: '8px' }}
+              style={{ color: 'white' }}
               onClick={likeBlog}
             >
               {blogObject.likes} likes
@@ -69,9 +68,9 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
             {/* If user created blog, show delete button */}
             {blog.user.name === user.name ? 
             <Button
-              variant='danger'
+              variant='outline-danger'
               type='submit'
-              style={{ marginLeft: '10px', color: 'white' }}
+              style={{ marginLeft: '20px' }}
               onClick={removeBlog}
             >
               Delete
@@ -83,7 +82,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
-            variant='secondary'
+            variant='secondary mt-3'
           >
             Hide
           </Button>

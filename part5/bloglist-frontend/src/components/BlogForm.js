@@ -30,6 +30,7 @@ const BlogForm = ({ createBlog }) => {
             type='text'
             value={title}
             onChange={({ target }) => setTitle(target.value)}
+            required
           />
         </Form.Group>
         <Form.Group className='mb-3' controlId='formAuthor'>
@@ -38,6 +39,7 @@ const BlogForm = ({ createBlog }) => {
             type='text'
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
+            required
           />
         </Form.Group>
         <Form.Group className='mb-3' controlId='formURL'>
@@ -46,9 +48,10 @@ const BlogForm = ({ createBlog }) => {
             type='text'
             value={url}
             onChange={({ target }) => setURL(target.value)}
+            required
           />
         </Form.Group>
-        <Button variant='primary' type='submit'>
+        <Button variant='primary mb-3' type='submit'>
           Save
         </Button>
       </Form>

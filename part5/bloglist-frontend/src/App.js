@@ -38,7 +38,6 @@ const App = () => {
   const addBlog = async blogObject => {
     const newBlog = await blogService.create(blogObject);
     setBlogs(blogs.concat(newBlog));
-    console.log(newBlog);
     setMessage(`New blog added "${newBlog.title}! by ${newBlog.author}"`);
     setMessageClass('success');
     setTimeout(() => {
@@ -52,7 +51,6 @@ const App = () => {
     setBlogs(
       blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate))
     );
-    console.log(blogToUpdate);
     setMessage(`Liked "${blogToUpdate.title}"`);
     setMessageClass('success');
     setTimeout(() => {
@@ -63,7 +61,7 @@ const App = () => {
 
   const deleteBlog = async blogObject => {
     try {
-      if (window.confirm(`Delete ${blogObject.title} ?`)) {
+      if (window.confirm(`Please confirm you would like delete "${blogObject.title}"?`)) {
         blogService.remove(blogObject.id);
         setMessage(`"${blogObject.title}" has been deleted`);
         setBlogs(blogs.filter(b => b.id !== blogObject.id));
@@ -136,7 +134,7 @@ const App = () => {
           />{' '}
           <Button variant='secondary' onClick={() => setLoginVisible(false)}>
             Cancel{' '}
-          </Button>{' '}
+          </Button>
         </div>{' '}
       </div>
     );
@@ -166,7 +164,7 @@ const App = () => {
 
   const logOutForm = () => (
     <form onSubmit={handleLogOut}>
-      <Button variant='info' type='submit' style={{ color: 'white' }}>
+      <Button variant='info mt-2' type='submit' style={{ color: 'white'}}>
         Logout{' '}
       </Button>{' '}
     </form>
@@ -179,16 +177,16 @@ const App = () => {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <Button variant='success' onClick={() => setLoginVisible(true)}>
-            Add blog{' '}
-          </Button>{' '}
-        </div>{' '}
+          <Button variant='outline-success' onClick={() => setLoginVisible(true)}>
+            Add blog
+          </Button>
+        </div>
         <div style={showWhenVisible}>
-          <BlogForm createBlog={addBlog} />{' '}
+          <BlogForm createBlog={addBlog} />
           <Button variant='secondary' onClick={() => setLoginVisible(false)}>
-            cancel{' '}
-          </Button>{' '}
-        </div>{' '}
+            cancel
+          </Button>
+        </div>
       </div>
     );
   };
@@ -196,23 +194,25 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <p className={messageClass}> {message} </p>{' '}
-        <h2> Log in to application </h2> {loginForm()}{' '}
+        <Container variant="mx-auto">
+          <p className={messageClass}> {message} </p>{' '}
+          <h2> Log in to application </h2> {loginForm()}{' '}
+        </Container>
       </div>
     );
   }
 
   return (
     <div>
-      <Container>
+      <Container variant="mx-auto">
         <p className={messageClass}> {message} </p>
         <p>
-          {user.name}{' '}
+          <b>{user.name}</b>{' '}
           is logged in
         </p>
         {logOutForm()} <hr />
         <br /> {blogForm()} <hr />
-        <ul>
+        <ul style={{ padding: '0', margin: '1'}}>
           
           {blogs
             .sort((a, b) => (a.likes > b.likes ? -1 : 1))
