@@ -41,7 +41,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
 
   return (
     <div>
-      <ListGroup variant className='m-3'>
+      <ListGroup variant className='blogItem m-3'>
         <div style={hideWhenVisible}>
           <ListGroup.Item>{blog.title} </ListGroup.Item>
           <Button
@@ -54,14 +54,15 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
         </div>
         <div style={showWhenVisible}>
           <ListGroup.Item>{blog.title} </ListGroup.Item>
-          <ListGroup.Item>{blog.url}</ListGroup.Item>
+          <ListGroup.Item className='urlItem'>{blog.url}</ListGroup.Item>
           <ListGroup.Item>{blog.author}</ListGroup.Item>
-          <ListGroup.Item>
+          <ListGroup.Item className='likesItem'>
             <Button
               variant='success'
               type='submit'
               style={{ marginLeft: '8px' }}
               onClick={likeBlog}
+              text="Likes"
             >
               {blogObject.likes} likes
             </Button>
