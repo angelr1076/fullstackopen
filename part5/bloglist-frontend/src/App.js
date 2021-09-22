@@ -38,7 +38,6 @@ const App = () => {
   const addBlog = async blogObject => {
     const newBlog = await blogService.create(blogObject);
     setBlogs(blogs.concat(newBlog));
-    console.log(newBlog);
     setMessage(`New blog added "${newBlog.title}! by ${newBlog.author}"`);
     setMessageClass('success');
     setTimeout(() => {
@@ -50,9 +49,8 @@ const App = () => {
   const updateBlog = async blogObject => {
     const blogToUpdate = await blogService.update(blogObject.id, blogObject);
     setBlogs(
-      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate)),
+      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate))
     );
-    console.log(blogToUpdate);
     setMessage(`Liked "${blogToUpdate.title}"`);
     setMessageClass('success');
     setTimeout(() => {
@@ -61,29 +59,12 @@ const App = () => {
     }, 3000);
   };
 
-  // const deleteBlog = async blog => {
-  //   const blogId = blog.user.id;
-  //   const userId = user.token;
-  //   console.log('blogId ', blogId, ' --- userId ', userId);
-  //   if (blogId === userId) {
-  //     try {
-  //       const blogToDelete = await blogService.remove(blogId);
-  //       setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id));
-  //       console.log(blogs);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   } else {
-  //     alert('You are not authorized to delete this blog');
-  //   }
-  // };
-
-  const deleteBlog = async blog => {
+  const deleteBlog = async blogObject => {
     try {
-      if (window.confirm(`Delete ${blog.title} ?`)) {
-        blogService.remove(blog.id);
-        setMessage(`Blog ${blog.title} was successfully deleted`);
-        setBlogs(blogs.filter(b => b.id !== blog.id));
+      if (window.confirm(`Please confirm you would like delete "${blogObject.title}"?`)) {
+        blogService.remove(blogObject.id);
+        setMessage(`"${blogObject.title}" has been deleted`);
+        setBlogs(blogs.filter(b => b.id !== blogObject.id));
         setMessageClass('success');
         setTimeout(() => {
           setMessage(null);
@@ -91,7 +72,7 @@ const App = () => {
         }, 5000);
       }
     } catch (exception) {
-      setMessage(`Cannot delete blog ${blog.title}`);
+      setMessage(`Error deleting "${blogObject.title}"`);
       setMessageClass('error');
       setTimeout(() => {
         setMessage(null);
@@ -140,9 +121,9 @@ const App = () => {
       <div>
         <div style={hideWhenVisible}>
           <Button variant='secondary' onClick={() => setLoginVisible(true)}>
-            Log In
-          </Button>
-        </div>
+            Log In{' '}
+          </Button>{' '}
+        </div>{' '}
         <div style={showWhenVisible}>
           <LoginForm
             username={username}
@@ -150,11 +131,11 @@ const App = () => {
             handleUsernameChange={({ target }) => setUsername(target.value)}
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
-          />
+          />{' '}
           <Button variant='secondary' onClick={() => setLoginVisible(false)}>
-            Cancel
+            Cancel{' '}
           </Button>
-        </div>
+        </div>{' '}
       </div>
     );
   };
@@ -183,9 +164,9 @@ const App = () => {
 
   const logOutForm = () => (
     <form onSubmit={handleLogOut}>
-      <Button variant='info' type='submit' style={{ color: 'white' }}>
-        Logout
-      </Button>
+      <Button variant='info mt-2' type='submit' style={{ color: 'white'}}>
+        Logout{' '}
+      </Button>{' '}
     </form>
   );
 
@@ -196,7 +177,7 @@ const App = () => {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <Button variant='success' onClick={() => setLoginVisible(true)}>
+          <Button variant='outline-success' onClick={() => setLoginVisible(true)}>
             Add blog
           </Button>
         </div>
@@ -213,31 +194,33 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <p className={messageClass}>{message}</p>
-        <h2>Log in to application</h2>
-        {loginForm()}
+        <Container variant="mx-auto">
+          <p className={messageClass}> {message} </p>{' '}
+          <h2> Log in to application </h2> {loginForm()}{' '}
+        </Container>
       </div>
     );
   }
 
   return (
     <div>
-      <Container>
-        <p className={messageClass}>{message}</p>
-
-        <p>{user.name} is logged in </p>
-        {logOutForm()}
-        <hr />
-        <br />
-        {blogForm()}
-        <hr />
-        <ul>
+      <Container variant="mx-auto">
+        <p className={messageClass}> {message} </p>
+        <p>
+          <b>{user.name}</b>{' '}
+          is logged in
+        </p>
+        {logOutForm()} <hr />
+        <br /> {blogForm()} <hr />
+        <ul style={{ padding: '0', margin: '1'}}>
+          
           {blogs
             .sort((a, b) => (a.likes > b.likes ? -1 : 1))
             .map(blog => (
               <Blog
                 key={blog.id}
                 blog={blog}
+                user={user}
                 updateBlog={updateBlog}
                 deleteBlog={deleteBlog}
               />

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-// import blogService from '../services/blogs';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
-const Blog = ({ blog, updateBlog, deleteBlog }) => {
-  console.log(blog)
+const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const buttonStyle = {
     width: '60px',
     marginTop: '5px',
@@ -36,18 +34,18 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   };
 
   const removeBlog = () => {
-    deleteBlog(blog)
+    deleteBlog(blog);
   };
 
   return (
     <div>
       <ListGroup variant className='blogItem m-3'>
         <div style={hideWhenVisible}>
-          <ListGroup.Item>{blog.title} </ListGroup.Item>
+          <ListGroup.Item>Title: <i>{blog.title}</i> </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
-            variant='primary'
+            variant='primary mt-3'
           >
             View
           </Button>
@@ -58,27 +56,32 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
           <ListGroup.Item>{blog.author}</ListGroup.Item>
           <ListGroup.Item className='likesItem'>
             <Button
-              variant='success'
+              variant='info'
               type='submit'
-              style={{ marginLeft: '8px' }}
+              style={{ color: 'white' }}
               onClick={likeBlog}
               text="Likes"
             >
               {blogObject.likes} likes
             </Button>
+            {/* If user created blog, show delete button */}
+            {blog.user.name === user.name ? 
             <Button
-              variant='danger'
+              variant='outline-danger'
               type='submit'
-              style={{ marginLeft: '10px', color: 'white' }}
+              style={{ marginLeft: '20px' }}
               onClick={removeBlog}
             >
               Delete
             </Button>
+            : ''
+            }
+            
           </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
-            variant='secondary'
+            variant='secondary mt-3'
           >
             Hide
           </Button>
