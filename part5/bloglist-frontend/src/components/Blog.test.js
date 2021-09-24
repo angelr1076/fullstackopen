@@ -94,7 +94,7 @@ describe('test <TestForm /> fireEvent', () => {
       target: { value: 'Eggie' },
     });
     fireEvent.submit(form);
-    // console.log(createBlog);
+
     expect(createBlog.mock.calls).toHaveLength(1);
     expect(createBlog.mock.calls[0][0].author).toBe('Eggie');
   });
