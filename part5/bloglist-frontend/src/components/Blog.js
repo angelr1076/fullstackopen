@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
-const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
+const Blog = ({ blog, blogName, user, updateBlog, deleteBlog }) => {
   const buttonStyle = {
     width: '60px',
     marginTop: '5px',
@@ -41,50 +41,53 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
     <div>
       <ListGroup variant className='blogItem m-3'>
         <div style={hideWhenVisible}>
-          <ListGroup.Item>Title: <i>{blog.title}</i> </ListGroup.Item>
+          <ListGroup.Item>{blog.title} </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
-            variant='primary mt-3'
+            variant='primary'
           >
             View
           </Button>
         </div>
         <div style={showWhenVisible}>
-          <ListGroup.Item>{blog.title} </ListGroup.Item>
-          <ListGroup.Item className='urlItem'>{blog.url}</ListGroup.Item>
-          <ListGroup.Item>{blog.author}</ListGroup.Item>
-          <ListGroup.Item className='likesItem'>
+          <ListGroup.Item>Title: {blog.title} </ListGroup.Item>
+          <ListGroup.Item className='urlItem'>URL: {blog.url}</ListGroup.Item>
+          <ListGroup.Item>Author: {blog.author}</ListGroup.Item>
+          <ListGroup.Item>Posted By: {blogName}</ListGroup.Item>
+          {/* <ListGroup.Item>User: {user}</ListGroup.Item> */}
+          <ListGroup.Item className='likesItem' onClick={likeBlog}>
             <Button
-              variant='info'
+              variant='success'
               type='submit'
-              style={{ color: 'white' }}
-              onClick={likeBlog}
-              text="Likes"
+              style={{ marginLeft: '8px' }}
             >
-              {blogObject.likes} likes
+            Like
             </Button>
-            {/* If user created blog, show delete button */}
-            {blog.user.name === user.name ? 
+            {' '} {blogObject.likes} {' '} Likes 
+            </ListGroup.Item>
+            <ListGroup.Item className='removeItem' onClick={removeBlog}>
+            
+              {blogName === user ? 
             <Button
               variant='outline-danger'
               type='submit'
               style={{ marginLeft: '20px' }}
-              onClick={removeBlog}
             >
               Delete
             </Button>
             : ''
             }
-            
           </ListGroup.Item>
+          <ListGroup.Item className='toggleItem' onClick={toggleVisibility}>
           <Button
-            onClick={toggleVisibility}
             style={buttonStyle}
-            variant='secondary mt-3'
+            variant='secondary'
+            type='submit'
           >
             Hide
           </Button>
+        </ListGroup.Item>
         </div>
         <hr style={hrStyle} />
       </ListGroup>

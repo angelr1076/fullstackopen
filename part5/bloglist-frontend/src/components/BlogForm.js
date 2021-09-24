@@ -21,7 +21,7 @@ const BlogForm = ({ createBlog }) => {
   };
 
   return (
-    <div>
+    <div className='blogForm'>
       <h2>Add a new blog</h2>
       <Form onSubmit={addBlog}>
         <Form.Group className='mb-3' controlId='formTitle'>
