@@ -1,5 +1,6 @@
 {
     "eslint.format.enable": true,
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "git.ignoreLimitWarning": true
 }
