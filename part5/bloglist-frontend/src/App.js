@@ -49,7 +49,7 @@ const App = () => {
   const updateBlog = async blogObject => {
     const blogToUpdate = await blogService.update(blogObject.id, blogObject);
     setBlogs(
-      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate))
+      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate)),
     );
     setMessage(`Liked "${blogToUpdate.title}"`);
     setMessageClass('success');
@@ -61,7 +61,11 @@ const App = () => {
 
   const deleteBlog = async blogObject => {
     try {
-      if (window.confirm(`Please confirm you would like delete "${blogObject.title}"?`)) {
+      if (
+        window.confirm(
+          `Please confirm you would like delete "${blogObject.title}"?`,
+        )
+      ) {
         blogService.remove(blogObject.id);
         setMessage(`"${blogObject.title}" has been deleted`);
         setBlogs(blogs.filter(b => b.id !== blogObject.id));
@@ -164,7 +168,7 @@ const App = () => {
 
   const logOutForm = () => (
     <form onSubmit={handleLogOut}>
-      <Button variant='info mt-2' type='submit' style={{ color: 'white'}}>
+      <Button variant='info mt-2' type='submit' style={{ color: 'white' }}>
         Logout{' '}
       </Button>{' '}
     </form>
@@ -177,7 +181,10 @@ const App = () => {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <Button variant='outline-success' onClick={() => setLoginVisible(true)}>
+          <Button
+            variant='outline-success'
+            onClick={() => setLoginVisible(true)}
+          >
             Add blog
           </Button>
         </div>
@@ -194,7 +201,7 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <Container variant="mx-auto">
+        <Container variant='mx-auto'>
           <p className={messageClass}> {message} </p>{' '}
           <h2> Log in to application </h2> {loginForm()}{' '}
         </Container>
@@ -204,23 +211,22 @@ const App = () => {
 
   return (
     <div>
-      <Container variant="mx-auto">
+      <Container variant='mx-auto'>
         <p className={messageClass}> {message} </p>
         <p>
-          <b>{user.name}</b>{' '}
-          is logged in
+          <b>{user.name}</b> is logged in
         </p>
         {logOutForm()} <hr />
         <br /> {blogForm()} <hr />
-        <ul style={{ padding: '0', margin: '1'}}>
-          
+        <ul style={{ padding: '0', margin: '1' }}>
           {blogs
             .sort((a, b) => (a.likes > b.likes ? -1 : 1))
             .map(blog => (
               <Blog
                 key={blog.id}
                 blog={blog}
-                user={user}
+                blogName={blog.user.name}
+                user={user.name}
                 updateBlog={updateBlog}
                 deleteBlog={deleteBlog}
               />
