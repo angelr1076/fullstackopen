@@ -124,8 +124,12 @@ const App = () => {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <Button variant='secondary' onClick={() => setLoginVisible(true)}>
-            Log In{' '}
+          <Button
+            id='login'
+            variant='secondary'
+            onClick={() => setLoginVisible(true)}
+          >
+            log in
           </Button>{' '}
         </div>{' '}
         <div style={showWhenVisible}>
