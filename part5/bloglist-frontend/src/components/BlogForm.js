@@ -27,6 +27,7 @@ const BlogForm = ({ createBlog }) => {
         <Form.Group className='mb-3' controlId='formTitle'>
           <Form.Label>Title</Form.Label>
           <Form.Control
+            id='title'
             type='text'
             value={title}
             onChange={({ target }) => setTitle(target.value)}
@@ -36,6 +37,7 @@ const BlogForm = ({ createBlog }) => {
         <Form.Group className='mb-3' controlId='formAuthor'>
           <Form.Label>Author</Form.Label>
           <Form.Control
+            id='author'
             type='text'
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
@@ -45,13 +47,14 @@ const BlogForm = ({ createBlog }) => {
         <Form.Group className='mb-3' controlId='formURL'>
           <Form.Label>URL</Form.Label>
           <Form.Control
+            id='url'
             type='text'
             value={url}
             onChange={({ target }) => setURL(target.value)}
             required
           />
         </Form.Group>
-        <Button variant='primary mb-3' type='submit'>
+        <Button id='save-button' variant='primary mb-3' type='submit'>
           Save
         </Button>
       </Form>

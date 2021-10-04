@@ -49,7 +49,7 @@ const App = () => {
   const updateBlog = async blogObject => {
     const blogToUpdate = await blogService.update(blogObject.id, blogObject);
     setBlogs(
-      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate)),
+      blogs.map(blog => (blog.id !== blogToUpdate.id ? blog : blogToUpdate))
     );
     setMessage(`Liked "${blogToUpdate.title}"`);
     setMessageClass('success');
@@ -63,7 +63,7 @@ const App = () => {
     try {
       if (
         window.confirm(
-          `Please confirm you would like delete "${blogObject.title}"?`,
+          `Please confirm you would like delete "${blogObject.title}"?`
         )
       ) {
         blogService.remove(blogObject.id);
