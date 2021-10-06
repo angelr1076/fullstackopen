@@ -68,15 +68,16 @@ const Blog = ({ blog, blogName, user, updateBlog, deleteBlog }) => {
           </ListGroup.Item>
           <ListGroup.Item className='removeItem' onClick={removeBlog}>
             {/* {blogName === user ? ( */}
-              <Button
-                variant='outline-danger'
-                type='submit'
-                style={{ marginLeft: '20px' }}
-              >
-                Delete
-              </Button>
+            <Button
+              id='delete'
+              variant='outline-danger'
+              type='submit'
+              style={{ marginLeft: '20px' }}
+            >
+              Delete
+            </Button>
             {/* ) : ( */}
-              {/* '' */}
+            {/* '' */}
             {/* )} */}
           </ListGroup.Item>
           <ListGroup.Item className='toggleItem' onClick={toggleVisibility}>
