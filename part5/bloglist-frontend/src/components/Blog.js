@@ -55,39 +55,35 @@ const Blog = ({ blog, blogName, user, updateBlog, deleteBlog }) => {
           <ListGroup.Item className='urlItem'>URL: {blog.url}</ListGroup.Item>
           <ListGroup.Item>Author: {blog.author}</ListGroup.Item>
           <ListGroup.Item>Posted By: {blogName}</ListGroup.Item>
-          {/* <ListGroup.Item>User: {user}</ListGroup.Item> */}
-          <ListGroup.Item className='likesItem' onClick={likeBlog}>
+          <ListGroup.Item>User: {user}</ListGroup.Item>
+          <ListGroup.Item id='like' className='likesItem' onClick={likeBlog}>
             <Button
               variant='success'
               type='submit'
               style={{ marginLeft: '8px' }}
             >
-            Like
-            </Button>
-            {' '} {blogObject.likes} {' '} Likes 
-            </ListGroup.Item>
-            <ListGroup.Item className='removeItem' onClick={removeBlog}>
-            
-              {blogName === user ? 
-            <Button
-              variant='outline-danger'
-              type='submit'
-              style={{ marginLeft: '20px' }}
-            >
-              Delete
-            </Button>
-            : ''
-            }
+              Like
+            </Button>{' '}
+            {blogObject.likes} Likes
+          </ListGroup.Item>
+          <ListGroup.Item className='removeItem' onClick={removeBlog}>
+            {/* {blogName === user ? ( */}
+              <Button
+                variant='outline-danger'
+                type='submit'
+                style={{ marginLeft: '20px' }}
+              >
+                Delete
+              </Button>
+            {/* ) : ( */}
+              {/* '' */}
+            {/* )} */}
           </ListGroup.Item>
           <ListGroup.Item className='toggleItem' onClick={toggleVisibility}>
-          <Button
-            style={buttonStyle}
-            variant='secondary'
-            type='submit'
-          >
-            Hide
-          </Button>
-        </ListGroup.Item>
+            <Button style={buttonStyle} variant='secondary' type='submit'>
+              Hide
+            </Button>
+          </ListGroup.Item>
         </div>
         <hr style={hrStyle} />
       </ListGroup>

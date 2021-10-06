@@ -46,6 +46,19 @@ describe('Blog app', function() {
                 cy.get('#url').type('angelrod.dev');
                 cy.get('#save-button').click();
             });
+
+            it('A blog can be liked', function() {
+                cy.get('#title').type('a new blog created by cypress');
+                cy.get('#author').type('Angel Rodriguez');
+                cy.get('#url').type('angelrod.dev');
+                cy.get('#save-button').click();
+                cy.contains('View').click();
+                cy.contains('Like').click();
+            });
+
+            it('A blog can be deleted by its creator', function() {
+                cy.contains('Delete').click();
+            });
         });
     });
 });
