@@ -21,7 +21,7 @@
       Testing Express servers, user administration
       Testing React apps
 
-- [ ] Part 5
+- [x] Part 5
       Testing React apps
 
 - [ ] Part 6

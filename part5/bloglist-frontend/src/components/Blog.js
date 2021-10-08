@@ -41,7 +41,7 @@ const Blog = ({ blog, blogName, user, updateBlog, deleteBlog }) => {
     <div>
       <ListGroup variant className='blogItem m-3'>
         <div style={hideWhenVisible}>
-          <ListGroup.Item>{blog.title} </ListGroup.Item>
+          <ListGroup.Item className='blog-title'>{blog.title} </ListGroup.Item>
           <Button
             onClick={toggleVisibility}
             style={buttonStyle}
@@ -68,15 +68,15 @@ const Blog = ({ blog, blogName, user, updateBlog, deleteBlog }) => {
           </ListGroup.Item>
           <ListGroup.Item className='removeItem' onClick={removeBlog}>
             {/* {blogName === user ? ( */}
-              <Button
-                variant='outline-danger'
-                type='submit'
-                style={{ marginLeft: '20px' }}
-              >
-                Delete
-              </Button>
+            <Button
+              variant='outline-danger'
+              type='submit'
+              style={{ marginLeft: '20px' }}
+            >
+              Delete
+            </Button>
             {/* ) : ( */}
-              {/* '' */}
+            {/* '' */}
             {/* )} */}
           </ListGroup.Item>
           <ListGroup.Item className='toggleItem' onClick={toggleVisibility}>

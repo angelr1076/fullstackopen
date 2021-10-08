@@ -222,7 +222,7 @@ const App = () => {
         </p>
         {logOutForm()} <hr />
         <br /> {blogForm()} <hr />
-        <ul style={{ padding: '0', margin: '1' }}>
+        <ul className='blogs' style={{ padding: '0', margin: '1' }}>
           {blogs
             .sort((a, b) => (a.likes > b.likes ? -1 : 1))
             .map(blog => (
