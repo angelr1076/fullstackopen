@@ -10,7 +10,6 @@ const App = () => {
     store.dispatch({
       type: 'GOOD',
     });
-    
   };
   const neutral = () => {
     store.dispatch({
