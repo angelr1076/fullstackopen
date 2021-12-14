@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { upvoteAnecdote } from './reducers/anecdoteReducer';
-import NewAnecdote from './components/NewAnecdote';
+import AnecdoteForm from './components/AnecdoteForm';
 
 const App = () => {
   const anecdotes = useSelector(state => state);
@@ -19,12 +19,14 @@ const App = () => {
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => dispatch(upvoteAnecdote(anecdote.id))}>vote</button>
+            <button onClick={() => dispatch(upvoteAnecdote(anecdote.id))}>
+              vote
+            </button>
           </div>
         </div>
       ))}
-      <h2>create new</h2>
-      <NewAnecdote />
+      
+      <AnecdoteForm />
     </div>
   );
 };
