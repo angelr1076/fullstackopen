@@ -20,7 +20,7 @@ const asObject = anecdote => {
 const initialState = anecdotesAtStart.map(asObject);
 
 const anecdoteReducer = (state = initialState, action) => {
-    console.log('action', action);
+    console.log('action', action.type, 'state', state);
     switch (action.type) {
         case 'NEW_ANECDOTE':
             return [...state.concat(action.data)];

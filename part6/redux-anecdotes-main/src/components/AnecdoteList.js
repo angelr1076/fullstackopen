@@ -12,6 +12,7 @@ const Upvote = ({ anecdote, handleClick }) => {
     </div>
   );
 };
+
 const Anecdotes = () => {
   const anecdotes = useSelector(state => state.content);
   const dispatch = useDispatch();
