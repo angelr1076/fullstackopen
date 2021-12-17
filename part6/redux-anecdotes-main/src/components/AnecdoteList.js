@@ -1,33 +1,46 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { upvoteAnecdote } from '../reducers/anecdoteReducer';
+import { showNotification, hideNotification } from '../reducers/notificationReducer';
 
-const Upvote = ({ anecdote, handleClick }) => {
-  return (
-    <div>
-      {anecdote.content}
-      <br /> has {anecdote.votes} votes{' '}
-      <button onClick={handleClick}>vote</button>
-      <hr />
-    </div>
-  );
-};
 
 const Anecdotes = () => {
   const anecdotes = useSelector(state => state.content);
   const dispatch = useDispatch();
+  const vote = id => dispatch(upvoteAnecdote(id))
+
+  const showAnecdoteNotif = content => {
+    dispatch(showNotification(content))
+    setTimeout(() => {
+      dispatch(hideNotification())
+    }, 5000)
+  }
 
   return (
     <ul>
       {anecdotes.map(anecdote => (
-        <Upvote
-          key={anecdote.id}
-          anecdote={anecdote}
-          handleClick={() => dispatch(upvoteAnecdote(anecdote.id))}
-        />
+        <div key={anecdote.id}>
+          <div>
+            {anecdote.content}
+          </div>
+          <div>
+            <button onClick={() => {
+              vote(anecdote.id)
+              showAnecdoteNotif(anecdote.content)
+            }}>
+              vote
+            </button>
+            {' '} has {anecdote.votes} votes 
+          </div>
+          <hr/>
+        </div>
       ))}
     </ul>
   );
 };
+
+
+
+
 
 export default Anecdotes;
