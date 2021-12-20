@@ -46,8 +46,6 @@
 - [ ] Part 11
       CI/CD
 
-Testing:
-
 Testing: 
 
 The following command only runs the tests found in the tests/note_api.test.js file:
