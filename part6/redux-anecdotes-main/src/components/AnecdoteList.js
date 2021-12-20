@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { upvoteAnecdote } from '../reducers/anecdoteReducer';
-import {
-  initializeAnecdotes,
-  hideNotification,
-} from '../reducers/notificationReducer';
+import { hideNotification } from '../reducers/notificationReducer';
+import { initializeAnecdotes } from '../reducers/anecdoteReducer';
 
 const Anecdotes = () => {
   const anecdotes = useSelector(state => state.content);
