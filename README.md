@@ -28,23 +28,6 @@
       State management with Redux
       React router, custom hooks, styling app with CSS and webpack
 
-- [ ] Part 7
-      React router, custom hooks, styling app with CSS and webpack
-      GraphQL
-
-- [ ] Part 8
-      GraphQL
-
-- [ ] Part 9
-      TypeScript
-      React Native
-
-- [ ] Part 10
-      React Native
-      CI/CD
-
-- [ ] Part 11
-      CI/CD
 
 Testing: 
 

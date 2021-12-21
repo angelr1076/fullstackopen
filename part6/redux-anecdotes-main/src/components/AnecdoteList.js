@@ -1,42 +1,36 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { upvoteAnecdote } from '../reducers/anecdoteReducer';
-import { hideNotification } from '../reducers/notificationReducer';
-import { initializeAnecdotes } from '../reducers/anecdoteReducer';
+import { setNotification } from '../reducers/notificationReducer';
 
-const Anecdotes = () => {
-  const anecdotes = useSelector(state => state.content);
+const Anecdote = ({ anecdote }) => {
   const dispatch = useDispatch();
-  const vote = id => dispatch(upvoteAnecdote(id));
 
-  const showAnecdoteNotif = content => {
-    dispatch(initializeAnecdotes(content));
-    setTimeout(() => {
-      dispatch(hideNotification());
-    }, 5000);
+  const voteHandler = () => {
+    dispatch(upvoteAnecdote(anecdote));
+    dispatch(setNotification(`Added '${anecdote.content}' successfully`, 10))
   };
 
   return (
-    <ul>
-      {anecdotes.map(anecdote => (
-        <div key={anecdote.id}>
-          <div>{anecdote.content}</div>
-          <div>
-            <button
-              onClick={() => {
-                vote(anecdote.id);
-                showAnecdoteNotif(anecdote.content);
-              }}
-            >
-              vote
-            </button>{' '}
-            has {anecdote.votes} votes
-          </div>
-          <hr />
-        </div>
-      ))}
-    </ul>
+    <div>
+    <br/>
+      <div>{anecdote.content}</div>
+      <div>
+        has <b>{anecdote.votes}</b> votes {' '}
+        <button onClick={voteHandler}>vote</button>
+      </div>
+      <hr/>
+    </div>
   );
 };
 
-export default Anecdotes;
+const AnecdoteList = () => {
+  const anecdotes = useSelector(state => state.content);
+  const sortByVotes = (a, b) => b.votes - a.votes;
+
+  return anecdotes
+    .sort(sortByVotes)
+    .map(anecdote => <Anecdote key={anecdote.id} anecdote={anecdote} />);
+};
+
+export default AnecdoteList;

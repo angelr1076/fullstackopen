@@ -8,13 +8,12 @@ const getAll = async() => {
 };
 
 const createNew = async content => {
-    const object = { content, votes: 0 };
+    const object = { content, id: (100000 * Math.random()).toFixed(0), votes: 0 };
     const response = await axios.post(baseUrl, object);
     return response.data;
 };
 
-const upVote = async object => {
-    console.log('Object to update: ', object);
+const update = async object => {
     const response = await axios.put(`${baseUrl}/${object.id}`, object);
     return response.data;
 };
@@ -22,5 +21,5 @@ const upVote = async object => {
 export default {
     getAll,
     createNew,
-    upVote,
+    update,
 };
