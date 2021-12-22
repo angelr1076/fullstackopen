@@ -1,4 +1,4 @@
-const notificationReducer = (state = [], action) => {
+const notificationReducer = (state = null, action) => {
     switch (action.type) {
         case 'NEW_NOTIFICATION':
             return action.notification;
@@ -18,12 +18,10 @@ export const setNotification = (notification, duration) => {
 
         setTimeout(() => {
             dispatch({
-                    type: 'CLEAR_NOTIFICATION',
-                    notification: null,
-                },
-                duration * 1000
-            );
-        });
+                type: 'CLEAR_NOTIFICATION',
+                notification: null,
+            });
+        }, duration * 1000);
     };
 };
 

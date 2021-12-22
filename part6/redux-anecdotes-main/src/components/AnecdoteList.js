@@ -8,18 +8,18 @@ const Anecdote = ({ anecdote }) => {
 
   const voteHandler = () => {
     dispatch(upvoteAnecdote(anecdote));
-    dispatch(setNotification(`Added '${anecdote.content}' successfully`, 10))
+    dispatch(setNotification(`You gave '${anecdote.content}' an upvote`, 5));
   };
 
   return (
     <div>
-    <br/>
+      <br />
       <div>{anecdote.content}</div>
       <div>
-        has <b>{anecdote.votes}</b> votes {' '}
+        has <b>{anecdote.votes}</b> votes{' '}
         <button onClick={voteHandler}>vote</button>
       </div>
-      <hr/>
+      <hr />
     </div>
   );
 };
