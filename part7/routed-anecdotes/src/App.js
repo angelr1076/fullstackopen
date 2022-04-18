@@ -117,34 +117,28 @@ const App = () => {
     setAnecdotes(anecdotes.concat(anecdote))
   }
 
-  // const anecdoteById = (id) =>
-  //   anecdotes.find(a => a.id === id)
+  const anecdoteById = (id) =>
+    anecdotes.find(a => a.id === id)
 
-  // const vote = (id) => {
-  //   const anecdote = anecdoteById(id)
+  const vote = (id) => {
+    const anecdote = anecdoteById(id)
 
-  //   const voted = {
-  //     ...anecdote,
-  //     votes: anecdote.votes + 1
-  //   }
+    const voted = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
 
-  //   setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
-  // }
+    setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
+  }
 
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
       <Routes>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/create">
-          <CreateNew addNew={addNew} />
-        </Route>
-        <Route path="/">
-          <AnecdoteList anecdotes={anecdotes} />
-        </Route>
+        <Route path="/about" element={<About />} />
+        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
       </Routes>
       <Footer />
     </div>
