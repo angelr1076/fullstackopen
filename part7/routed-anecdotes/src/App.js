@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route, Link, useMatch, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useMatch } from 'react-router-dom';
 
 const Menu = () => {
   const padding = {
@@ -89,12 +89,14 @@ const CreateNew = props => {
       info,
       votes: 0,
     });
+    e.target.reset();
   };
+
 
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           content
           <input
@@ -119,16 +121,18 @@ const CreateNew = props => {
             onChange={e => setInfo(e.target.value)}
           />
         </div>
-        <button onClick={handleSubmit}>create</button>
+        <button type='submit'>create</button>
       </form>
     </div>
   );
 };
 
 const Notification = ({ message }) => {
-  <div>
-    <h2><b>{message}</b> was created.</h2>
-  </div>
+  return (
+    <div>
+      <h2><b>{message}</b> was created.</h2>
+    </div>
+  )
 }
 
 const App = () => {
@@ -151,7 +155,6 @@ const App = () => {
 
   const [notification, setNotification] = useState('')
 
-  const navigate = useNavigate();
   const match = useMatch('/:id')
   const anecdote = match
     ? anecdotes.find(a => a.id === Number(match.params.id))
@@ -166,7 +169,6 @@ const App = () => {
     setTimeout(() => {
       setNotification('')
     }, 5000);
-    navigate('/');
   };
 
   const anecdoteById = id => anecdotes.find(a => a.id === id);
@@ -185,7 +187,7 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Notification message={notification}/>
+      {notification ? <Notification message={notification}/> : ''}
       <Menu />
       <Routes>
         <Route path='/:id'
