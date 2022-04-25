@@ -187,8 +187,8 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      {notification ? <Notification message={notification}/> : ''}
       <Menu />
+      {notification ? <Notification message={notification}/> : ''}
       <Routes>
         <Route path='/:id'
           element={<Anecdote anecdote={anecdote} />} />
